@@ -1,0 +1,83 @@
+# ----------------------
+# Python
+# ----------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+.venv/
+venv/
+env/
+ENV/
+
+# Environment variables
+.env
+.env.*
+
+# ----------------------
+# FastAPI / Uvicorn
+# ----------------------
+*.log
+uvicorn.log
+
+# ----------------------
+# Build / Distribution
+# ----------------------
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ----------------------
+# Database
+# ----------------------
+*.db
+*.sqlite3
+
+# ----------------------
+# Static files (optional - keep if generated)
+# ----------------------
+# If you generate static files (like collected assets)
+staticfiles/
+
+# ----------------------
+# IDE / Editor
+# ----------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ----------------------
+# OS files
+# ----------------------
+.DS_Store
+Thumbs.db
+
+# ----------------------
+# Testing / Coverage
+# ----------------------
+.coverage
+htmlcov/
+.pytest_cache/
+
+# ----------------------
+# Node (if frontend uses npm)
+# ----------------------
+node_modules/
+package-lock.json
+yarn.lock
+
+# ----------------------
+# Secrets / API Keys
+# ----------------------
+secrets.json
+*.pem
+*.key
+
+# ----------------------
+# Misc
+# ----------------------
+*.bak
+*.tmp

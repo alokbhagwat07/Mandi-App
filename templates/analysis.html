@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            background: #0f2027;
+            color: white;
+            text-align: center;
+            font-family: Poppins;
+        }
+
+        .box {
+            margin: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>📊 Market Analysis</h1>
+
+<div class="box">
+    <h2>📈 Price Chart</h2>
+    <canvas id="chart"></canvas>
+</div>
+
+<div class="box" id="insights">
+    🔍 Loading insights...
+</div>
+
+<script>
+async function loadAnalysis() {
+    const res = await fetch('/prices');
+    const data = await res.json();
+
+    let labels = [];
+    let prices = [];
+
+    data.slice(0,6).forEach(item => {
+        labels.push(item.crop);
+        prices.push(parseInt(item.price));
+    });
+
+    // 📊 CHART
+    new Chart(document.getElementById("chart"), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Prices",
+                data: prices
+            }]
+        }
+    });
+
+    // 🧠 INSIGHTS
+    let max = Math.max(...prices);
+    let min = Math.min(...prices);
+
+    let highCrop = data.find(i => parseInt(i.price) === max);
+    let lowCrop = data.find(i => parseInt(i.price) === min);
+
+    document.getElementById("insights").innerHTML = `
+        🔥 Highest Price: ${highCrop.crop} (₹${max}) <br>
+        📉 Lowest Price: ${lowCrop.crop} (₹${min}) <br>
+        📊 Total Crops: ${data.length}
+    `;
+}
+
+loadAnalysis();
+</script>
+
+</body>
+</html>

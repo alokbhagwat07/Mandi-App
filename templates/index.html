@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>VajraStream</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: white;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 50px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+}
+
+.logo-text {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.menu a {
+    text-decoration: none;
+    margin: 0 15px;
+    color: white;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.menu a:hover {
+    color: #00c6ff;
+}
+
+/* LANGUAGE BUTTON */
+.lang-btn{
+    background:#00c6ff;
+    border:none;
+    padding:6px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:500;
+}
+
+/* HERO */
+.hero {
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* LOGO */
+.hero img {
+    width: 380px;
+    animation: premiumZoom 2s ease-in-out;
+    filter: drop-shadow(0px 15px 35px rgba(0,0,0,0.5));
+}
+
+/* TEXT */
+.hero p {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #ddd;
+    max-width: 500px;
+    animation: fadeText 2.5s ease-in-out;
+}
+
+/* SEARCH BAR */
+.search-box {
+    margin-top: 20px;
+}
+
+.search-box input {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    width: 200px;
+}
+
+.search-box button {
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #00c6ff;
+    cursor: pointer;
+}
+
+/* CARDS */
+.cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 40px;
+    gap: 20px;
+}
+
+.card {
+    background: rgba(255,255,255,0.08);
+    padding: 20px;
+    width: 250px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.05);
+}
+
+/* PRICE COLOR */
+.high { color: #00ffcc; }
+.low { color: #ff6b6b; }
+
+/* ANIMATIONS */
+@keyframes premiumZoom {
+    0% {opacity:0; transform: scale(0.3) rotate(-15deg);}
+    40% {opacity:1; transform: scale(1.2) rotate(5deg);}
+    100% {transform: scale(1);}
+}
+
+@keyframes fadeText {
+    from {opacity:0; transform: translateY(20px);}
+    to {opacity:1; transform: translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo-text">🌾 VajraStream</div>
+
+    <div class="menu">
+        <a href="#" id="home">Home</a>
+        <a href="/prices-page" id="prices">Prices</a>
+        <a href="/analysis-page" id="analysis">Analysis</a>
+        <a href="/dashboard-page">Dashboard</a> <!-- ✅ ADDED -->
+        <a href="#" id="about">About</a>
+        <button class="lang-btn" onclick="toggleLang()">मराठी</button>
+    </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+    <img src="/static/logo.png">
+
+    <p id="desc">
+        Smart Mandi Price & Analysis System helping farmers and traders 
+        with real-time crop insights.
+    </p>
+
+    <!-- SEARCH -->
+    <div class="search-box">
+        <input type="text" id="crop" placeholder="Search crop...">
+        <button onclick="loadData()" id="searchBtn">Search</button>
+    </div>
+
+    <!-- 🎤 VOICE BUTTON (ADDED ONLY) -->
+    <button onclick="startVoice()" style="margin-top:10px;padding:10px;border-radius:10px;">
+        🎤 बोला
+    </button>
+
+</div>
+
+<!-- DATA -->
+<div class="cards" id="data">Loading...</div>
+
+<script>
+
+let currentLang = "en";
+
+// 🌾 TRANSLATION MAP (ADDED)
+const cropMap = {
+    onion: "कांदा",
+    tomato: "टोमॅटो",
+    potato: "बटाटा",
+    wheat: "गहू",
+    rice: "तांदूळ",
+    maize: "मका",
+    soyabean: "सोयाबीन",
+    cotton: "कापूस"
+};
+
+function toggleLang(){
+
+    if(currentLang === "en"){
+        currentLang = "mr";
+
+        document.getElementById("home").innerText = "मुख्यपृष्ठ";
+        document.getElementById("prices").innerText = "भाव";
+        document.getElementById("analysis").innerText = "विश्लेषण";
+        document.getElementById("about").innerText = "माहिती";
+        
+
+        document.getElementById("desc").innerText =
+        "शेतकरी आणि व्यापाऱ्यांसाठी रिअल-टाइम बाजारभाव आणि पिकांचे विश्लेषण देणारी स्मार्ट प्रणाली.";
+
+        document.getElementById("crop").placeholder = "पीक शोधा...";
+        document.getElementById("searchBtn").innerText = "शोधा";
+
+    }else{
+
+        currentLang = "en";
+
+        document.getElementById("home").innerText = "Home";
+        document.getElementById("prices").innerText = "Prices";
+        document.getElementById("analysis").innerText = "Analysis";
+        document.getElementById("about").innerText = "About";
+
+        document.getElementById("desc").innerText =
+        "Smart Mandi Price & Analysis System helping farmers and traders with real-time crop insights.";
+
+        document.getElementById("crop").placeholder = "Search crop...";
+        document.getElementById("searchBtn").innerText = "Search";
+    }
+
+    loadData();
+}
+
+
+// 🎤 VOICE SEARCH (ADDED)
+function startVoice(){
+    let recognition = new webkitSpeechRecognition();
+    recognition.lang = "mr-IN";
+    recognition.start();
+
+    recognition.onresult = function(event){
+        let speech = event.results[0][0].transcript.toLowerCase();
+
+        // Marathi → English
+        const reverseMap = {
+            "कांदा":"Onion",
+            "टोमॅटो":"Tomato",
+            "बटाटा":"Potato",
+            "गहू":"Wheat"
+        };
+
+        for(let key in reverseMap){
+            if(speech.includes(key)){
+                document.getElementById("crop").value = reverseMap[key];
+                break;
+            }
+        }
+
+        loadData();
+    }
+}
+
+
+// 📊 LOAD DATA (ONLY MODIFIED INSIDE)
+async function loadData() {
+    let crop = document.getElementById("crop").value;
+
+    const res = await fetch(`/prices?crop=${crop}`);
+    const data = await res.json();
+
+    let output = "";
+
+    data.forEach(item => {
+
+        let priceClass = item.price > 2000 ? "high" : "low";
+
+        let cropName = item.crop;
+
+        // 🌾 TRANSLATE IF MARATHI
+        if(currentLang === "mr"){
+            let lower = item.crop.toLowerCase();
+
+            for(let key in cropMap){
+                if(lower.includes(key)){
+                    cropName = cropMap[key];
+                    break;
+                }
+            }
+        }
+
+        output += `
+            <div class="card">
+                <h3>🌾 ${cropName}</h3>
+                <p class="${priceClass}">💰 ₹${item.price}/ Quintal</p>
+                <p>📍 ${item.market || item.state}</p>
+            </div>
+        `;
+    });
+
+    document.getElementById("data").innerHTML = output;
+}
+
+loadData();
+
+</script>
+
+</body>
+</html>
