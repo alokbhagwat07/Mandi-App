@@ -3,11 +3,14 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from Services.services import  get_prices_data
-from flask import Flask, render_template, jsonify, request
+#from flask import Flask, render_template, jsonify, request
 #from Services.services import  get_maharashtra_data
 from dotenv import load_dotenv
+import os
 
-load_dotenv()
+# 🔹 Load .env at the root of project
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
 app = FastAPI(
     title="VajraStream API 🚀",
@@ -29,21 +32,13 @@ def home(request: Request):
         {"request": request}
     )
 
-'''@app.get("/states")
-def states_api():
-    return get_states()
-@app.get("/prices")
-def prices_api(state: str = None):
-    return get_data(state)'''
+
 
 
 @app.get("/prices")
 def get_prices(crop: str = None, state: str = None, district: str = None):
    return get_prices_data(crop, state, district)
 
-#@app.get("/prices")
-#def prices_api():
- #   return get_maharashtra_data()
 
 
 @app.get("/prices-page", response_class=HTMLResponse)
@@ -91,7 +86,7 @@ def dashboard_data():
     return output
 
 
-from fastapi import FastAPI, Request
+'''from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
@@ -119,21 +114,17 @@ def home(request: Request):
         {"request": request}
     )
 
-'''@app.get("/states")
+@app.get("/states")
 def states_api():
     return get_states()
 @app.get("/prices")
 def prices_api(state: str = None):
-    return get_data(state)'''
+    return get_data(state)
 
 
 @app.get("/prices")
 def get_prices(crop: str = None, state: str = None, district: str = None):
    return get_prices_data(crop, state, district)
-
-#@app.get("/prices")
-#def prices_api():
- #   return get_maharashtra_data()
 
 
 @app.get("/prices-page", response_class=HTMLResponse)
@@ -178,6 +169,6 @@ def dashboard_data():
         except:
             continue
 
-    return output
+    return output'''
 
 
